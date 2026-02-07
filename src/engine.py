@@ -9,8 +9,8 @@ import torch.optim as optim
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-from utils.progress_bar import display_progress_bar
-from utils.early_stoping import EarlyStopping
+from src.utils.progress_bar import display_progress_bar
+from src.utils.early_stoping import EarlyStopping
 
 
 class Trainer:
@@ -85,8 +85,8 @@ class Trainer:
         trainloader,
         valloader,
         epochs=10,
-        patience=20,
-        delta=1e-4,
+        patience=5,
+        delta=1e-3,
         model_name="model",
         topk=5,
     ):
@@ -131,7 +131,7 @@ class Trainer:
 
                 if topk_models is not None and len(topk_models) > topk:
                     _, worst_path = topk_models.pop(-1)
-                    if os.path.exist(worst_path):
+                    if os.path.exists(worst_path):
                         os.remove(worst_path)
 
             # Early Stopping
